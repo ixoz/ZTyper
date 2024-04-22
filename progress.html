@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Master - Progress</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #264653;
+            color: #FFC300;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #264653;
+            overflow: hidden;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: #FFC300;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .navbar a:hover {
+            background-color: #2a9d8f;
+            color: white;
+        }
+
+        #root {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #header {
+            font-size: 24px;
+        }
+
+        #chart-container {
+            width: 80%;
+            height: 400px;
+            margin-top: 20px;
+        }
+
+        #chart {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="ztyper.html">Home</a>
+        <a href="#">Progress</a>
+    </div>
+
+    <div id="root">
+        <h1 id="header">Typing Master - Progress</h1>
+        <div id="chart-container">
+            <canvas id="chart"></canvas>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const previousSpeeds = [30, 40, 45, 50, 55]; // Sample previous typing speeds
+
+            const ctx = document.getElementById('chart').getContext('2d');
+            const chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Session 1', 'Session 2', 'Session 3', 'Session 4', 'Session 5'],
+                    datasets: [{
+                        label: 'Typing Speed (WPM)',
+                        data: previousSpeeds,
+                        backgroundColor: 'rgba(255, 193, 7, 0.2)',
+                        borderColor: 'rgba(255, 193, 7, 1)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

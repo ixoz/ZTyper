@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Master</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #264653;
+            color: #FFC300;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #264653;
+            overflow: hidden;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: #FFC300;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .navbar a:hover {
+            background-color: #2a9d8f;
+            color: white;
+        }
+
+        #root {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #header {
+            font-size: 24px;
+        }
+
+        #game-container {
+            margin-top: 20px;
+        }
+
+        .word {
+            font-size: 20px;
+        }
+
+        .word-input {
+            font-size: 18px;
+            padding: 10px;
+            margin-top: 10px;
+            border: 2px solid grey;
+            border-radius: 5px;
+        }
+
+        #timer-container {
+            margin-top: 20px;
+        }
+
+        #timer, #timer-count {
+            display: inline;
+        }
+
+        #score-container {
+            margin-top: 20px;
+        }
+
+        #score-label, #score-count, #feedback {
+            display: inline;
+        }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+        }
+
+        .popup h2 {
+            margin-top: 0;
+        }
+
+        #start-button {
+            background-color: #FFD700;
+            color: #264653;
+            font-size: 24px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        #start-button:hover {
+            background-color: #FFC300;
+            color: #264653;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="#" onclick="showSuggestions()">Suggestions</a>
+        <a href="#" onclick="showDownloads()">Downloads</a>
+        <a href="#" onclick="showAbout()">About</a>
+        <a href="progress.html">Progress</a> <!-- Added link to the progress page -->
+        <a href="#" onclick="openOffline()">Go Offline</a>
+    </div>
+
+    <div id="root">
+        <h1 id="header">ZTyper</h1>
+        <div id="game-container">
+            <p id="word" class="word"></p>
+            <input type="text" id="word-input" class="word-input" placeholder="Type word and hit Enter to start the game">
+            <div id="timer-container">
+                <p id="timer">Timer: </p>
+                <p id="timer-count">60</p>
+            </div>
+            <div id="score-container">
+                <p id="score-label"></p>
+                <p id="score-count"></p>
+                <p id="feedback"></p>
+            </div>
+            <button id="start-button" onclick="startGame()">Start Test</button>
+        </div>
+    </div>
+    <div class="popup" id="result-popup" style="display: none;">
+        <h2>Typing Speed</h2>
+        <p>Your typing speed: <span id="typing-speed"></span> words per minute</p>
+        <p>Suggestions:</p>
+        <ul id="suggestions">
+            <li>Practice regularly.</li>
+            <li>Focus on accuracy over speed.</li>
+            <li>Take breaks to rest your hands and eyes.</li>
+            <li>Use all your fingers while typing.</li>
+            <li>Use online typing tools for practice.</li>
+        </ul>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        function showSuggestions() {
+            window.location.href = 'suggestion.html'; // Redirect to the suggestions page
+        }
+
+        function showDownloads() {
+            // Add functionality to show downloads
+        }
+
+        function showAbout() {
+            // Add functionality to show about
+        }
+
+        function openOffline() {
+            window.location.href = 'file:///home/nisarg/Downloads/typing-speed-game-main/game.py';
+        }
+    </script>
+</body>
+</html>
