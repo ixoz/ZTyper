@@ -1,26 +1,22 @@
-# typing-speed-game
-Typing speed game made in python with tkinter and pygame. Measures typing speed of a person and tells if its average, below averaage or above average. At the end of game tells you your wpm speed.
 
-## Libraries and modules used:
-* tkinter
-* pygame
-* random 
-* time
+Ztyper
+Ztyper is a Python-based typing speed game with a sleek interface designed to measure your typing proficiency. It utilizes tkinter and pygame libraries along with random and time modules to deliver an engaging experience. At the end of each session, Ztyper provides your typing speed in Words Per Minute (WPM) and evaluates whether your speed is average, below average, or above average.
 
-## Features:
-* Gives the user speed in WPM at the end of game.
-* Tells if speed average, below average or above average at the end of game based on WPM.
-* Plays a error sound when user makes a mistake.
-* Retry option is given at the end of game.
+Key Features:
+WPM Calculation: Calculates your typing speed in WPM.
+Performance Evaluation: Assesses your typing speed and categorizes it as average, below average, or above average.
+Error Feedback: Plays an error sound when a mistake is made during typing.
+Retry Option: Offers the opportunity to retry the game for improvement.
 
-# How to play:
-* Just run the new.py file after cloning this repository in your system.
-* Then follow instructions of game and enjoy yourselves!!
+How to Play:
+Clone the repository to your system.
+Run the game.py file.
+Follow the on-screen instructions to begin the game and test your typing skills.
+Screenshots:
 
-## Screenshots:
+![Screenshot 2024-04-22 112858](https://github.com/ixoz/ZTyper/assets/148843416/3e8720af-a3a0-4d0e-af15-9d5fecf33340)
+![Screenshot 2024-04-22 112929](https://github.com/ixoz/ZTyper/assets/148843416/2036e339-9e79-41df-adc3-1c13d76bd321)
+![Screenshot 2024-04-22 113010](https://github.com/ixoz/ZTyper/assets/148843416/7ea2276f-ae74-4516-8c3e-d44bb8914dc2)
 
-![2](https://user-images.githubusercontent.com/87118384/188900737-288e30fc-0ab0-4b7c-ba56-ce913a71a26a.PNG)
 
-![3](https://user-images.githubusercontent.com/87118384/188900747-a4de10ec-b149-4210-b089-83986d971d4d.PNG)
-
-![4](https://user-images.githubusercontent.com/87118384/188900749-16e844e4-df42-4611-b1a1-4df39b48ba0d.PNG)
+Enjoy improving your typing speed with Ztyper!
