@@ -3,170 +3,242 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Typing Master</title>
+    <title>ZTyper</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             background-color: #264653;
             color: #FFC300;
-            text-align: center;
             margin: 0;
             padding: 0;
         }
 
-        .navbar {
-            background-color: #264653;
-            overflow: hidden;
-        }
-
-        .navbar a {
-            float: left;
-            display: block;
-            color: #FFC300;
-            text-align: center;
-            padding: 14px 20px;
-            text-decoration: none;
-            font-size: 18px;
-        }
-
-        .navbar a:hover {
-            background-color: #2a9d8f;
-            color: white;
-        }
-
-        #root {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-
-        #header {
-            font-size: 24px;
-        }
-
-        #game-container {
-            margin-top: 20px;
-        }
-
-        .word {
-            font-size: 20px;
-        }
-
-        .word-input {
-            font-size: 18px;
-            padding: 10px;
-            margin-top: 10px;
-            border: 2px solid grey;
-            border-radius: 5px;
-        }
-
-        #timer-container {
-            margin-top: 20px;
-        }
-
-        #timer, #timer-count {
-            display: inline;
-        }
-
-        #score-container {
-            margin-top: 20px;
-        }
-
-        #score-label, #score-count, #feedback {
-            display: inline;
-        }
-
-        .popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #fff;
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            z-index: 999;
         }
 
-        .popup h2 {
-            margin-top: 0;
+        .title {
+            font-size: 36px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
         }
 
-        #start-button {
-            background-color: #FFD700;
-            color: #264653;
+        .game-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .game-info span {
+            font-size: 18px;
+            font-style: italic;
+            color: grey;
+        }
+
+        .word-label {
             font-size: 24px;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
+            font-weight: bold;
+            color: #FFD60A;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
-        #start-button:hover {
+        .word-entry {
+            font-size: 18px;
+            padding: 8px;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+            text-align: center;
+            border: 4px solid #264653;
+            background-color: #264653;
+            color: grey;
+        }
+
+        .timer-label {
+            font-size: 18px;
+            color: green;
+        }
+
+        .progress-container {
+            width: 400px;
+            height: 20px;
+            background-color: #264653;
+            margin: 0 auto;
+            margin-bottom: 10px;
+            border: 2px solid green;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 100%;
+            background-color: green;
+        }
+
+        .score-label {
+            font-size: 20px;
+            font-weight: bold;
+            color: #FFC300;
+        }
+
+        .score-count {
+            font-size: 20px;
+            color: #FFC300;
+        }
+
+        .feedback-label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #FFC300;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .retry-button {
+            font-size: 16px;
+            padding: 10px 20px;
             background-color: #FFC300;
             color: #264653;
+            border: none;
+            cursor: pointer;
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <a href="#" onclick="showSuggestions()">Suggestions</a>
-        <a href="#" onclick="showDownloads()">Downloads</a>
-        <a href="#" onclick="showAbout()">About</a>
-        <a href="progress.html">Progress</a> <!-- Added link to the progress page -->
-        <a href="#" onclick="openOffline()">Go Offline</a>
-    </div>
-
-    <div id="root">
-        <h1 id="header">ZTyper</h1>
-        <div id="game-container">
-            <p id="word" class="word"></p>
-            <input type="text" id="word-input" class="word-input" placeholder="Type word and hit Enter to start the game">
-            <div id="timer-container">
-                <p id="timer">Timer: </p>
-                <p id="timer-count">60</p>
-            </div>
-            <div id="score-container">
-                <p id="score-label"></p>
-                <p id="score-count"></p>
-                <p id="feedback"></p>
-            </div>
-            <button id="start-button" onclick="startGame()">Start Test</button>
+    <div class="container">
+        <h1 class="title">ZTyper</h1>
+        <div class="game-info">
+            <span>Type the phrase and press Enter to start the game</span>
         </div>
+        <div class="word-label" id="wordLabel">[Word]</div>
+        <input type="text" class="word-entry" id="wordEntry" autofocus>
+        <div class="timer-label">Time Left: <span id="timerCount">60</span></div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="score-label">Your typing speed: <span id="scoreCount"></span></div>
+        <div class="feedback-label" id="feedbackLabel"></div>
+        <button class="retry-button" id="retryButton">Retry</button>
     </div>
-    <div class="popup" id="result-popup" style="display: none;">
-        <h2>Typing Speed</h2>
-        <p>Your typing speed: <span id="typing-speed"></span> words per minute</p>
-        <p>Suggestions:</p>
-        <ul id="suggestions">
-            <li>Practice regularly.</li>
-            <li>Focus on accuracy over speed.</li>
-            <li>Take breaks to rest your hands and eyes.</li>
-            <li>Use all your fingers while typing.</li>
-            <li>Use online typing tools for practice.</li>
-        </ul>
-    </div>
-    <script src="script.js"></script>
+
     <script>
-        function showSuggestions() {
-            window.location.href = 'suggestion.html'; // Redirect to the suggestions page
-        }
+        document.addEventListener("DOMContentLoaded", function() {
+            var words = [
+                'red car', 'blue sky', 'green grass', 'yellow duck', 'black night', 'white cloud', 'silver coin',
+                'purple flower', 'orange sun', 'pink candy', 'brown dog', 'grey cat', 'beige sand', 'gold ring',
+                'turquoise sea', 'maroon hat', 'navy ship', 'cream cake', 'mint leaf', 'teal ocean', 'coral reef',
+                'violet butterfly', 'indigo jeans', 'ruby gem', 'amber necklace', 'ivory tower', 'jade stone', 'lavender scent',
+                'magenta lipstick', 'olive oil', 'peach fruit', 'plum jam', 'salmon fish', 'tan skin', 'taupe color',
+                'bronze medal', 'copper wire', 'banana fruit', 'happy child', 'big tree', 'small book', 'round ball',
+                'soft pillow', 'hard rock', 'fast car', 'slow turtle', 'loud music', 'quiet room', 'tasty cake',                'sour lemon', 'sweet cookie', 'spicy chili', 'bitter medicine', 'hot sun', 'cold ice', 'fresh air',
+                'wet rain', 'dry desert', 'smooth silk', 'rough stone', 'sharp knife', 'dull pencil', 'clear water',
+                'cloudy sky', 'sunny day', 'windy weather', 'stormy night', 'calm sea', 'angry bee', 'happy smile',
+                'sad tear', 'fierce lion', 'gentle lamb', 'brave hero', 'cowardly mouse', 'loud thunder', 'quiet whisper',
+                'busy street', 'empty room', 'colorful rainbow', 'dull gray', 'shiny gold', 'soft fur', 'hard shell'
+            ];
 
-        function showDownloads() {
-            window.location.href = 'https://github.com/ixoz/ZTyper/releases/tag/Stable'; // Redirect to the Download page
-        }
+            var timeleft = 60;
+            var matched = 0;
+            var notMatched = 0;
+            var timerInterval;
 
-        function showAbout() {
-            window.location.href = 'https://github.com/ixoz/ZTyper'; // About
-        
-        }
+            var wordLabel = document.getElementById("wordLabel");
+            var wordEntry = document.getElementById("wordEntry");
+            var timerCount = document.getElementById("timerCount");
+            var progressBar = document.getElementById("progressBar");
+            var scoreCount = document.getElementById("scoreCount");
+            var feedbackLabel = document.getElementById("feedbackLabel");
+            var retryButton = document.getElementById("retryButton");
 
-        function openOffline() {
-            window.location.href = 'file:///home/nisarg/Downloads/typing-speed-game-main/game.py';
-        }
+            function startTimer() {
+                timerInterval = setInterval(function() {
+                    timeleft--;
+                    timerCount.textContent = timeleft;
+                    progressBar.style.width = (timeleft / 60) * 100 + "%";
+                    if (timeleft < 11) {
+                        timerCount.style.color = "red";
+                        progressBar.style.borderColor = "red";
+                    }
+                    if (timeleft === 10) {
+                        // Play countdown sound
+                    }
+                    if (timeleft === 0) {
+                        endGame();
+                    }
+                }, 1000);
+            }
+
+            function startGame() {
+                if (timeleft === 60) {
+                    startTimer();
+                }
+
+                var enteredWord = wordEntry.value.trim();
+                var currentWord = wordLabel.textContent;
+                if (enteredWord === currentWord) {
+                    matched++;
+                    wordLabel.style.color = "green";
+                } else {
+                    notMatched++;
+                    wordLabel.style.color = "red";
+                }
+
+                setTimeout(nextWord, 500);
+                wordEntry.value = "";
+            }
+
+            function nextWord() {
+                wordLabel.textContent = words[Math.floor(Math.random() * words.length)];
+                wordLabel.style.color = "#FFD60A";
+            }
+
+            function endGame() {
+                clearInterval(timerInterval);
+                scoreCount.textContent = matched;
+                if (matched >= 35 && matched <= 40) {
+                    feedbackLabel.textContent = "Average";
+                } else if (matched >= 65) {
+                    feedbackLabel.textContent = "Above Average";
+                } else {
+                    feedbackLabel.textContent = "Below Average";
+                }
+                retryButton.style.display = "block";
+            }
+
+            function resetGame() {
+                timeleft = 60;
+                matched = 0;
+                notMatched = 0;
+                wordEntry.value = "";
+                clearInterval(timerInterval);
+                timerCount.textContent = timeleft;
+                timerCount.style.color = "green";
+                progressBar.style.width = "100%";
+                progressBar.style.borderColor = "green";
+                wordLabel.textContent = words[Math.floor(Math.random() * words.length)];
+                scoreCount.textContent = "";
+                feedbackLabel.textContent = "";
+                retryButton.style.display = "none";
+            }
+
+            wordEntry.addEventListener("keyup", function(event) {
+                if (event.keyCode === 13) {
+                    startGame();
+                }
+            });
+
+            retryButton.addEventListener("click", function() {
+                resetGame();
+                startTimer();
+            });
+
+            // Initial setup
+            wordLabel.textContent = words[Math.floor(Math.random() * words.length)];
+        });
     </script>
 </body>
 </html>
