@@ -1,4 +1,3 @@
-from tkinter import *
 import tkinter as tk
 from tkinter import messagebox, ttk
 import random
@@ -6,13 +5,17 @@ import pygame
 import webbrowser
 from PIL import Image, ImageTk
 import matplotlib.pyplot as plt
-import subprocess
+from database import Database
 import os
+import subprocess
 
 class ZTyper:
-    def __init__(self):
+    def __init__(self, user_id):
+        self.db = Database()
+        self.user_id = user_id
+
         self.root = tk.Tk()
-        self.root.title("ZTyper")      
+        self.root.title("ZTyper")
         self.root.geometry("800x600")
         self.root.configure(bg="#264653")
         self.root.attributes("-fullscreen", False)
@@ -31,6 +34,7 @@ class ZTyper:
         self.create_widgets()
         self.root.bind('<F11>', self.toggle_fullscreen)
         self.root.bind('<Return>', self.start_game)
+        self.root.bind('<Escape>', self.exit_game)  # Add Esc binding to exit the game
 
         # Start main loop
         self.root.mainloop()
@@ -69,25 +73,26 @@ class ZTyper:
         self.create_menu()
 
     def create_title(self):
-        title_label = Label(self.root, text="ZTyper", bg="#264653", fg="#FFC300", font="Arial 36 bold")
+        title_label = tk.Label(self.root, text="ZTyper", bg="#264653", fg="#FFC300", font="Arial 36 bold")
         title_label.pack(pady=(20, 10))
 
     def create_word_entry(self):
-        self.word_label = Label(self.root, text=random.choice(self.words), font="Arial 24 bold", fg="#FFD60A", bg="#264653")
+        self.word_label = tk.Label(self.root, text=random.choice(self.words), font="Arial 24 bold", fg="#FFD60A", bg="#264653")
         self.word_label.pack(pady=20)
 
-        self.word_entry = Entry(self.root, font="Arial 18 bold", fg="grey", bg="#264653", justify="center", bd=4)
+        self.word_entry = tk.Entry(self.root, font="Arial 18 bold", fg="grey", bg="#264653", justify="center", bd=4)
         self.word_entry.pack(pady=10)
+        self.word_entry.focus_set()
 
     def create_timer(self):
-        timer_frame = Frame(self.root, bg="#264653")
+        timer_frame = tk.Frame(self.root, bg="#264653")
         timer_frame.pack()
 
-        self.timer_label = Label(timer_frame, text="Time Left:", fg="green", bg="#264653", font="Arial 18 bold")
-        self.timer_label.pack(side=LEFT, padx=(50, 10))
+        self.timer_label = tk.Label(timer_frame, text="Time Left:", fg="green", bg="#264653", font="Arial 18 bold")
+        self.timer_label.pack(side=tk.LEFT, padx=(50, 10))
 
-        self.timer_count = Label(timer_frame, text=self.timeleft, fg="green", bg="#264653", font="Arial 18 bold")
-        self.timer_count.pack(side=LEFT)
+        self.timer_count = tk.Label(timer_frame, text=self.timeleft, fg="green", bg="#264653", font="Arial 18 bold")
+        self.timer_count.pack(side=tk.LEFT)
 
     def create_progress_bar(self):
         self.progress_bar = ttk.Progressbar(self.root, orient="horizontal", length=400, mode="determinate", maximum=self.timeleft)
@@ -95,42 +100,42 @@ class ZTyper:
         self.progress_bar['value'] = self.timeleft
 
     def create_instructions(self):
-        instructions_label = Label(self.root, text="Type the phrase and press Enter to start the game", bg="#264653", fg="grey", font="Arial 14 italic")
+        instructions_label = tk.Label(self.root, text="Type the phrase and press Enter to start the game", bg="#264653", fg="grey", font="Arial 14 italic")
         instructions_label.pack(pady=10)
 
     def create_score_widgets(self):
-        score_frame = Frame(self.root, bg="#264653")
+        score_frame = tk.Frame(self.root, bg="#264653")
         score_frame.pack(pady=10)
 
-        self.score_label = Label(score_frame, text="Your typing speed: ", bg="#264653", fg="#FFC300", font="Arial 20 bold")
-        self.score_label.pack(side=LEFT, padx=(50, 10))
+        self.score_label = tk.Label(score_frame, text="Your typing speed: ", bg="#264653", fg="#FFC300", font="Arial 20 bold")
+        self.score_label.pack(side=tk.LEFT, padx=(50, 10))
 
-        self.score_count = Label(score_frame, text="", bg="#264653", fg="#FFC300", font="Arial 20 bold")
-        self.score_count.pack(side=LEFT)
+        self.score_count = tk.Label(score_frame, text="", bg="#264653", fg="#FFC300", font="Arial 20 bold")
+        self.score_count.pack(side=tk.LEFT)
 
-        self.feedback_label = Label(self.root, text="", bg="#264653", fg="#FFC300", font="Arial 16 bold")
+        self.feedback_label = tk.Label(self.root, text="", bg="#264653", fg="#FFC300", font="Arial 16 bold")
         self.feedback_label.pack(pady=(10, 20))
 
     def create_menu(self):
-        menubar = Menu(self.root)
+        menubar = tk.Menu(self.root)
         self.root.config(menu=menubar)
 
-        file_menu = Menu(menubar, tearoff=0)
+        file_menu = tk.Menu(menubar, tearoff=0)
         menubar.add_cascade(label="File", menu=file_menu)
         file_menu.add_command(label="Save Score", command=self.save_score)
         file_menu.add_command(label="View Previous Scores", command=self.show_previous_scores)
         file_menu.add_separator()
         file_menu.add_command(label="Exit", command=self.exit_game)
 
-        tips_menu = Menu(menubar, tearoff=0)
+        tips_menu = tk.Menu(menubar, tearoff=0)
         menubar.add_cascade(label="Tips", menu=tips_menu)
         tips_menu.add_command(label="Show Tips", command=self.show_tips)
 
-        online_menu = Menu(menubar, tearoff=0)
+        online_menu = tk.Menu(menubar, tearoff=0)
         menubar.add_cascade(label="Online", menu=online_menu)
         online_menu.add_command(label="Start Online Test", command=self.open_online)
 
-        python_menu = Menu(menubar, tearoff=0)
+        python_menu = tk.Menu(menubar, tearoff=0)
         menubar.add_cascade(label="Update", menu=python_menu)
         python_menu.add_command(label="Install Python", command=self.install_python)
 
@@ -139,42 +144,42 @@ class ZTyper:
         self.root.attributes("-fullscreen", fullscreen)
 
     def show_tips(self):
-        messagebox.showinfo("Tips", "1. Practice regularly.\n2. Focus on accuracy over speed.\n3. Take breaks to rest your hands and eyes.\n4. Use all your fingers while typing.\n5. Use online typing tools for practice.")
+        messagebox.showinfo("Tips", "1. Practice regularly.\n2. Focus on accuracy over speed.\n3. Take breaks to rest your hands and eyes.\n4. Use all your fingers while typing.\n        .5. Use online typing tools for practice.")
 
     def save_score(self):
-        with open("scores.txt", "a") as file:
-            file.write(f"Score: {self.matched}\n")
+        self.db.save_score(self.user_id, self.matched)
+        messagebox.showinfo("Success", "Score saved successfully")
 
-    def exit_game(self):
-        self.root.quit()
+    def exit_game(self, event=None):
+        self.root.destroy()
+        from dashboard import Dashboard  # Ensure Dashboard is properly imported
+        Dashboard(self.user_id)
 
     def show_previous_scores(self):
-        top = Toplevel(self.root)
+        scores = self.db.get_scores(self.user_id)
+        top = tk.Toplevel(self.root)
         top.title("Previous Scores")
         top.geometry("800x600")
         top.configure(bg="#2a9d8f")
 
-        with open("scores.txt", "r") as file:
-            scores = file.readlines()
-
-        label = Label(top, text="Previous Scores", font=("Arial", 20), bg="#2a9d8f", fg="white")
+        label = tk.Label(top, text="Previous Scores", font=("Arial", 20), bg="#2a9d8f", fg="white")
         label.pack(pady=10)
 
-        frame = Frame(top, bg="#2a9d8f")
+        frame = tk.Frame(top, bg="#2a9d8f")
         frame.pack(pady=10)
 
-        scrollbar = Scrollbar(frame)
-        scrollbar.pack(side=RIGHT, fill=Y)
+        scrollbar = tk.Scrollbar(frame)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
-        scores_list = Listbox(frame, yscrollcommand=scrollbar.set, font=("Arial", 12), bg="#264653", fg="white")
-        for score in scores:
-            scores_list.insert(END, score.strip())
-        scores_list.pack(side=LEFT, fill=BOTH)
+        scores_list = tk.Listbox(frame, yscrollcommand=scrollbar.set, font=("Arial", 12), bg="#264653", fg="white")
+        for score, created_at in scores:
+            scores_list.insert(tk.END, f"Score: {score} - {created_at}")
+        scores_list.pack(side=tk.LEFT, fill=tk.BOTH)
 
         scrollbar.config(command=scores_list.yview)
 
         # Plotting graph
-        score_values = [int(score.split(":")[1].strip()) for score in scores if score.strip().startswith("Score")]
+        score_values = [score for score, _ in scores]
         plt.figure(figsize=(8, 6))
         plt.bar(range(len(score_values)), score_values, color='#e9c46a')
         plt.xlabel('Game', fontsize=14)
@@ -186,7 +191,7 @@ class ZTyper:
 
         image = Image.open('scores_graph.png')
         graph_photo = ImageTk.PhotoImage(image)
-        graph_label = Label(top, image=graph_photo, bg="#2a9d8f")
+        graph_label = tk.Label(top, image=graph_photo, bg="#2a9d8f")
         graph_label.image = graph_photo
         graph_label.pack(pady=10)
 
@@ -231,7 +236,7 @@ class ZTyper:
             pygame.mixer.music.play(loops=0)
 
         self.word_label.after(500, self.next_word)
-        self.word_entry.delete(0, END)
+        self.word_entry.delete(0, tk.END)
 
     def next_word(self):
         self.word_label.configure(text=random.choice(self.words), fg="#FFD60A")
@@ -258,8 +263,10 @@ class ZTyper:
         self.score_label.configure(text='')
         self.timer_count.configure(text=self.timeleft, fg="green")
         self.timer_label.configure(fg="green")
-        self.word_entry.delete(0, END)
+        self.word_entry.delete(0, tk.END)
         self.word_label.configure(text=random.choice(self.words), fg="#FFD60A")
 
 if __name__ == "__main__":
-    ZTyper()
+    from auth import AuthWindow
+    AuthWindow()
+    
