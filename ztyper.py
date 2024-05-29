@@ -6,8 +6,6 @@ import webbrowser
 from PIL import Image, ImageTk
 import matplotlib.pyplot as plt
 from database import Database
-import os
-import subprocess
 
 class ZTyper:
     def __init__(self, user_id):
@@ -122,14 +120,7 @@ class ZTyper:
 
         file_menu = tk.Menu(menubar, tearoff=0)
         menubar.add_cascade(label="File", menu=file_menu)
-        file_menu.add_command(label="Save Score", command=self.save_score)
-        file_menu.add_command(label="View Previous Scores", command=self.show_previous_scores)
-        file_menu.add_separator()
         file_menu.add_command(label="Exit", command=self.exit_game)
-
-        tips_menu = tk.Menu(menubar, tearoff=0)
-        menubar.add_cascade(label="Tips", menu=tips_menu)
-        tips_menu.add_command(label="Show Tips", command=self.show_tips)
 
         online_menu = tk.Menu(menubar, tearoff=0)
         menubar.add_cascade(label="Online", menu=online_menu)
@@ -139,73 +130,30 @@ class ZTyper:
         menubar.add_cascade(label="Update", menu=python_menu)
         python_menu.add_command(label="Install Python", command=self.install_python)
 
+        dashboard_menu = tk.Menu(menubar, tearoff=0)
+        menubar.add_cascade(label="Dashboard", menu=dashboard_menu)
+        dashboard_menu.add_command(label="Open Dashboard", command=self.open_dashboard)
+
     def toggle_fullscreen(self, event=None):
         fullscreen = not self.root.attributes("-fullscreen")
         self.root.attributes("-fullscreen", fullscreen)
 
     def show_tips(self):
-        messagebox.showinfo("Tips", "1. Practice regularly.\n2. Focus on accuracy over speed.\n3. Take breaks to rest your hands and eyes.\n4. Use all your fingers while typing.\n        .5. Use online typing tools for practice.")
-
-    def save_score(self):
-        self.db.save_score(self.user_id, self.matched)
-        messagebox.showinfo("Success", "Score saved successfully")
+        messagebox.showinfo("Tips", "1. Practice regularly.\n2. Focus on accuracy over speed.\n3. Take breaks to rest your hands and eyes.\n4. Use all your fingers while typing.\n5. Use online typing tools for practice.")
 
     def exit_game(self, event=None):
         self.root.destroy()
+
+    def open_dashboard(self):
         from dashboard import Dashboard  # Ensure Dashboard is properly imported
+        self.root.destroy()  # Close the current window
         Dashboard(self.user_id)
-
-    def show_previous_scores(self):
-        scores = self.db.get_scores(self.user_id)
-        top = tk.Toplevel(self.root)
-        top.title("Previous Scores")
-        top.geometry("800x600")
-        top.configure(bg="#2a9d8f")
-
-        label = tk.Label(top, text="Previous Scores", font=("Arial", 20), bg="#2a9d8f", fg="white")
-        label.pack(pady=10)
-
-        frame = tk.Frame(top, bg="#2a9d8f")
-        frame.pack(pady=10)
-
-        scrollbar = tk.Scrollbar(frame)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-
-        scores_list = tk.Listbox(frame, yscrollcommand=scrollbar.set, font=("Arial", 12), bg="#264653", fg="white")
-        for score, created_at in scores:
-            scores_list.insert(tk.END, f"Score: {score} - {created_at}")
-        scores_list.pack(side=tk.LEFT, fill=tk.BOTH)
-
-        scrollbar.config(command=scores_list.yview)
-
-        # Plotting graph
-        score_values = [score for score, _ in scores]
-        plt.figure(figsize=(8, 6))
-        plt.bar(range(len(score_values)), score_values, color='#e9c46a')
-        plt.xlabel('Game', fontsize=14)
-        plt.ylabel('Score', fontsize=14)
-        plt.title('ZTyper - Previous Scores', fontsize=16)
-        plt.xticks(fontsize=12)
-        plt.yticks(fontsize=12)
-        plt.savefig('scores_graph.png')
-
-        image = Image.open('scores_graph.png')
-        graph_photo = ImageTk.PhotoImage(image)
-        graph_label = tk.Label(top, image=graph_photo, bg="#2a9d8f")
-        graph_label.image = graph_photo
-        graph_label.pack(pady=10)
 
     def open_online(self):
         webbrowser.open_new("ztyper.html")
 
     def install_python(self):
-        current_directory = os.path.dirname(os.path.abspath(__file__))
-        installer_path = os.path.join(current_directory, "Python_Install", "python-3.12.3-amd64.exe")
-
-        if os.path.exists(installer_path):
-            subprocess.Popen(installer_path)
-        else:
-            print("Installer not found:", installer_path)
+        messagebox.showinfo("Install Python", "Python installation will begin.")
 
     def time(self):
         if self.timeleft > 0:
@@ -269,4 +217,3 @@ class ZTyper:
 if __name__ == "__main__":
     from auth import AuthWindow
     AuthWindow()
-    
