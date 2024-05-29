@@ -27,7 +27,7 @@ class Database:
         self.conn.commit()
 
     def get_scores(self, user_id):
-        self.cursor.execute("SELECT score, created_at FROM scores WHERE user_id = %s ORDER BY created_at DESC", (user_id,))
+        self.cursor.execute("SELECT score, created_at FROM scores WHERE user_id = %s", (user_id,))
         return self.cursor.fetchall()
 
     def update_user(self, user_id, new_username, new_password):
