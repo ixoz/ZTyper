@@ -1,22 +1,17 @@
-
-Ztyper
-Ztyper is a Python-based typing speed game with a sleek interface designed to measure your typing proficiency. It utilizes tkinter and pygame libraries along with random and time modules to deliver an engaging experience. At the end of each session, Ztyper provides your typing speed in Words Per Minute (WPM) and evaluates whether your speed is average, below average, or above average.
+GU PROJECT Sem4
+Ztyper is a Python-based typing speed game with a sleek interface that's smoother than a cat in a cashmere sweater. It uses tkinter and pygame libraries, along with random and time modules, to create an experience that's more fun than a barrel of monkeys on a trampoline. At the end of each session, Ztyper will tell you your typing speed in Words Per Minute (WPM) and give you a pat on the back or a gentle nudge, depending on whether you’re a typing ninja, a speedy snail, or somewhere in between.
 
 Key Features:
-WPM Calculation: Calculates your typing speed in WPM.
-Performance Evaluation: Assesses your typing speed and categorizes it as average, below average, or above average.
-Error Feedback: Plays an error sound when a mistake is made during typing.
-Retry Option: Offers the opportunity to retry the game for improvement.
 
-How to Play:
-Clone the repository to your system.
-Run the game.py file.
-Follow the on-screen instructions to begin the game and test your typing skills.
+WPM Calculation: Your typing speed is calculated in WPM, because who doesn't want to know how fast they can type without breaking the sound barrier?
+Performance Evaluation: Ztyper doesn’t just tell you how fast you type, it also lets you know if you're average, below average, or if you're typing so fast you're a legend in your own lunchtime.
+Error Feedback: Made a typo? Ztyper will let you know with a sound that’s so fitting, you might think it’s mocking you with a gentle “Oops, you missed!”(Not really)
+Retry Option: Feeling like you could do better? Hit retry and show Ztyper who’s boss. It’s like a rematch with a keyboard, and you’re totally going to win this time.
+Dashboard: you can manage your account, update user details, see your previous scores
+Also you can store your details in Mysql Database
 Screenshots:
+![Screenshot 2024-06-11 163455](https://github.com/ixoz/ZTyper/assets/148843416/fcb6db77-8c41-4d53-ab2b-dcf9ccbcd496)
+![Screenshot 2024-06-11 163620](https://github.com/ixoz/ZTyper/assets/148843416/c918058f-c064-440b-8ac1-ea1f41a491bb)
+![Screenshot 2024-06-11 162745](https://github.com/ixoz/ZTyper/assets/148843416/3c2e364e-1d04-41b9-821c-d4ff1140d944)
 
-![Screenshot 2024-04-22 112858](https://github.com/ixoz/ZTyper/assets/148843416/3e8720af-a3a0-4d0e-af15-9d5fecf33340)
-![Screenshot 2024-04-22 112929](https://github.com/ixoz/ZTyper/assets/148843416/2036e339-9e79-41df-adc3-1c13d76bd321)
-![Screenshot 2024-04-22 113010](https://github.com/ixoz/ZTyper/assets/148843416/7ea2276f-ae74-4516-8c3e-d44bb8914dc2)
-
-
-Enjoy improving your typing speed with Ztyper!
+Yaa Its Ztyper!
